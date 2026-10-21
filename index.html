@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Spangram Studio</title>
+<title>Daily Logram</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&display=swap">
 <style>
-:root{--bg:#eef2f6;--fg:#15202b;--card:#fff;--mut:#5d6b7a;--line:#d3dce5;--sel:#15202b;--selfg:#fff;--found:#8cc0ee;--span:#f3c94b;--foundfg:#0d2035;
+:root{--bg:#eef2f6;--fg:#15202b;--card:#fff;--mut:#5d6b7a;--line:#d3dce5;--sel:#15202b;--selfg:#fff;--found:#ff4a68;--span:#f3c94b;--foundfg:#0d2035;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171e;--fg:#e8eef4;--card:#1a242e;--mut:#93a3b3;--line:#2b3946;--sel:#e8eef4;--selfg:#10171e;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#10171e;--fg:#e8eef4;--card:#1a242e;--mut:#93a3b3;--line:#2b3946;--sel:#e8eef4;--selfg:#10171e;color-scheme:dark}
@@ -69,7 +69,7 @@ input[type=color]{width:100%;height:38px;border:1px solid var(--line);border-rad
 <script>
 const $=s=>document.querySelector(s);
 const SAMPLE={theme:'Make it add up',span:'7+6=13',words:['5+5=10','9+9=18','8+4=12'],rows:6,cols:4,c1:'#8cc0ee',c2:'#f3c94b',email:'cluyk@oaisd.org'};
-const clean=s=>s.toUpperCase().replace(/[^\p{L}\p{N}+\-=]/gu,'');
+const clean=s=>s.toUpperCase().replace(/\*/g,'×').replace(/\//g,'÷').replace(/[^\p{L}\p{N}+\-=×÷]/gu,'');
 let cfg=SAMPLE;
 try{const s=localStorage.getItem('spangram-cfg');if(s)cfg=JSON.parse(s)}catch(e){}
 let P=null,found=[],sel=[],drag=false,tap=false,hintCell=-1,hints=0,done=false;
