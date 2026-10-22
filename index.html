@@ -1,206 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Daily Logram</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&display=swap">
-<style>
-:root{--bg:#eef2f6;--fg:#15202b;--card:#fff;--mut:#5d6b7a;--line:#d3dce5;--sel:#15202b;--selfg:#fff;--found:#ff4a68;--span:#f3c94b;--foundfg:#0d2035;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10171e;--fg:#e8eef4;--card:#1a242e;--mut:#93a3b3;--line:#2b3946;--sel:#e8eef4;--selfg:#10171e;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#10171e;--fg:#e8eef4;--card:#1a242e;--mut:#93a3b3;--line:#2b3946;--sel:#e8eef4;--selfg:#10171e;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.4 "Familjen Grotesk",system-ui,sans-serif}
-main{max-width:460px;margin:0 auto;padding:16px 16px 40px}
-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
-h1{font-size:22px;margin:0;font-weight:700;letter-spacing:-.01em}
-button{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
-button:hover{border-color:var(--mut)}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
-button.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
-.theme{margin:18px 0 6px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px}
-.theme small{color:var(--mut);display:block}.theme b{font-size:24px;letter-spacing:-.01em}
-.bar{display:flex;justify-content:space-between;align-items:center;margin:10px 2px;color:var(--mut)}
-#msg{min-height:26px;text-align:center;font-weight:600;margin:4px 0}
-#board{position:relative;container-type:inline-size;width:100%;touch-action:none;user-select:none;-webkit-user-select:none;margin:0 auto}
-#board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-#grid{position:relative;display:grid;grid-template-columns:repeat(var(--cols),1fr);width:100%;height:100%}
-.cell{display:grid;place-items:center}
-.dot{width:80%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:calc(100cqw / var(--cols) * .4);transition:background .12s}
-.dot.f{background:var(--found);color:var(--foundfg)}.dot.s{background:var(--span);color:var(--foundfg)}
-.dot.sel{background:var(--sel);color:var(--selfg)}
-.dot.hint{box-shadow:0 0 0 3px var(--fg);animation:pulse 1s 3}
-@keyframes pulse{50%{transform:scale(1.12)}}
-.shake{animation:shake .3s}@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-@media (prefers-reduced-motion:reduce){.dot.hint,.shake{animation:none}}
-#ed{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
-#ed label{display:block;font-weight:600;margin:12px 0 4px}#ed label:first-child{margin-top:0}
-input[type=text],input[type=number],textarea{width:100%;font:inherit;color:inherit;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
-textarea{min-height:130px;resize:vertical}
-.row{display:flex;gap:10px}.row>div{flex:1}
-input[type=color]{width:100%;height:38px;border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:2px}
-#count{margin:10px 0;font-weight:600}#count.bad{color:#d0453a}#count.ok{color:#2e9a5b}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-[hidden]{display:none!important}
-#sub label{display:block;font-weight:600;margin-bottom:4px}#sub a{display:inline-block;margin-top:8px;font-weight:600;color:var(--fg)}#list div{padding:6px 0;border-top:1px solid var(--line)}
-</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Daily Logram</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&display=swap"> -->
 </head>
+
 <body>
-<main>
-<header><h1>Spangram Studio</h1><button id="bEd">Customize</button></header>
-<div class="theme"><small>Theme</small><b id="th"></b></div>
-<div class="bar"><span id="prog"></span><span><button id="bHint">Hint</button> <button id="bNew">Reshuffle</button></span></div>
-<div id="msg"></div>
-<div id="board"><svg id="svg"></svg><div id="grid"></div></div>
-<div id="sub" class="theme" style="margin-top:16px"><label for="who">Your name</label><input type="text" id="who" autocomplete="off"><div class="acts"><button class="pri" id="bSub">Submit my grid</button></div><div id="res"></div></div>
+    <main>
+        <header>
+            <h1>Daily Logram</h1><button id="bEd">Customize</button>
+        </header>
+        <div class="theme"><small>Theme</small><b id="th"></b></div>
+        <div class="bar"><span id="prog"></span><span><button id="bHint">Hint</button> <button
+                    id="bNew">Reshuffle</button></span></div>
+        <div id="msg"></div>
+        <div id="board"><svg id="svg"></svg>
+            <div id="grid"></div>
+        </div>
+        <div id="sub" class="theme" style="margin-top:16px"><label for="who">Your name</label><input type="text"
+                id="who" autocomplete="off">
+            <div class="acts"><button class="pri" id="bSub">Submit my grid</button></div>
+            <div id="res"></div>
+        </div>
 
-<section id="ed" hidden>
-<label for="fT">Theme clue</label><input type="text" id="fT">
-<label for="fS">Spangram</label><input type="text" id="fS" autocomplete="off">
-<label for="fW">Theme words (one per line)</label><textarea id="fW"></textarea>
-<div class="row"><div><label for="fR">Rows</label><input type="number" id="fR" min="3" max="12"></div><div><label for="fC">Columns</label><input type="number" id="fC" min="3" max="10"></div></div>
-<div class="row"><div><label for="c1">Word color</label><input type="color" id="c1"></div><div><label for="c2">Spangram color</label><input type="color" id="c2"></div></div>
-<label for="fE">Send results to (email)</label><input type="text" id="fE" placeholder="you@example.com">
-<div id="count"></div>
-<div class="acts"><button class="pri" id="bBuild">Build puzzle</button><button id="bReset">Load sample</button></div>
-</section>
-</main>
-<script>
-const $=s=>document.querySelector(s);
-const SAMPLE={theme:'Make it add up',span:'7+6=13',words:['5+5=10','9+9=18','8+4=12'],rows:6,cols:4,c1:'#8cc0ee',c2:'#f3c94b',email:'cluyk@oaisd.org'};
-const clean=s=>s.toUpperCase().replace(/\*/g,'×').replace(/\//g,'÷').replace(/[^\p{L}\p{N}+\-=×÷]/gu,'');
-let cfg=SAMPLE;
-try{const s=localStorage.getItem('spangram-cfg');if(s)cfg=JSON.parse(s)}catch(e){}
-let P=null,found=[],sel=[],drag=false,tap=false,hintCell=-1,hints=0,done=false;
+        <section id="ed" hidden>
+            <label for="fT">Theme clue</label><input type="text" id="fT">
+            <label for="fS">Spangram</label><input type="text" id="fS" autocomplete="off">
+            <label for="fW">Theme words (one per line)</label><textarea id="fW"></textarea>
+            <div class="row">
+                <div><label for="fR">Rows</label><input type="number" id="fR" min="3" max="12"></div>
+                <div><label for="fC">Columns</label><input type="number" id="fC" min="3" max="10"></div>
+            </div>
+            <div class="row">
+                <div><label for="c1">Word color</label><input type="color" id="c1"></div>
+                <div><label for="c2">Spangram color</label><input type="color" id="c2"></div>
+            </div>
+            <label for="fE">Send results to (email)</label><input type="text" id="fE" placeholder="you@example.com">
+            <div id="count"></div>
+            <div class="acts"><button class="pri" id="bBuild">Build puzzle</button><button id="bReset">Load
+                    sample</button></div>
+        </section>
+    </main>
+    <script>
+        const $ = s => document.querySelector(s);
+        const SAMPLE = { theme: 'Make it add up', span: '12+10=22', words: ['12+20=32', '11+1=12', '18+5=23'], rows: 6, cols: 5, c1: '#ff4a68', c2: '#f3c94b', email: 'cluyk@oaisd.org' };
+        const clean = s => s.toUpperCase().replace(/\*/g, '×').replace(/\//g, '÷').replace(/[^\p{L}\p{N}+\-=×÷]/gu, '');
+        let cfg = SAMPLE;
+        try { const s = localStorage.getItem('spangram-cfg'); if (s) cfg = JSON.parse(s) } catch (e) { }
+        let P = null, found = [], sel = [], drag = false, tap = false, hintCell = -1, hints = 0, done = false;
 
-function gen(c){
- const R=c.rows,C=c.cols,N=R*C,NB=[];
- for(let i=0;i<N;i++){const r=i/C|0,q=i%C,a=[];for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){if(!dr&&!dc)continue;const rr=r+dr,cc=q+dc;if(rr>=0&&rr<R&&cc>=0&&cc<C)a.push(rr*C+cc)}NB.push(a)}
- const sh=a=>{a=a.slice();for(let i=a.length;i>1;){const j=Math.random()*i--|0;[a[i],a[j]]=[a[j],a[i]]}return a};
- const dg=new Set();
- const dk=(a,b)=>{const r1=a/C|0,c1=a%C,r2=b/C|0,c2=b%C;if(r1==r2||c1==c2)return null;const t=(r2-r1)*(c2-c1)>0?'d':'a',p=Math.min(r1,r2)+','+Math.min(c1,c2)+',';return[p+t,p+(t=='d'?'a':'d')]};
- const find=(len,starts,ok,free)=>{let steps=0;const used=new Set(),path=[],loc=new Set();
-  const go=(i,k)=>{if(++steps>2500)return false;path.push(i);used.add(i);if(k)loc.add(k[0]);
-   if(path.length==len){if(!ok||ok(path))return true}
-   else for(const n of sh(NB[i])){if(!free[n]||used.has(n))continue;const k2=dk(i,n);if(k2&&(dg.has(k2[1])||loc.has(k2[1])))continue;if(go(n,k2))return true}
-   path.pop();used.delete(i);if(k)loc.delete(k[0]);return false};
-  for(const s of sh(starts)){steps=0;if(free[s]&&go(s,null)){const p=path.slice();for(let j=1;j<p.length;j++){const k=dk(p[j-1],p[j]);if(k)dg.add(k[0])}return p}}return null};
- const ok2=(free,minLen)=>{const seen=new Set();for(let i=0;i<N;i++){if(!free[i]||seen.has(i))continue;let n=0;const st=[i];seen.add(i);while(st.length){const x=st.pop();n++;for(const y of NB[x])if(free[y]&&!seen.has(y)){seen.add(y);st.push(y)}}if(n<minLen)return false}return true};
- const L=c.span.length,dirs=[];if(L>=C)dirs.push('h');if(L>=R)dirs.push('v');
- if(!dirs.length)return null;
- const all=[...Array(N).keys()];
- for(let t=0;t<800;t++){
-  dg.clear();
-  const free=Array(N).fill(true),sol=[],d=dirs[Math.random()*dirs.length|0],flip=Math.random()<.5;
-  const A=i=>d=='h'?i%C==0:i<C,B=i=>d=='h'?i%C==C-1:i>=N-C;
-  const s0=flip?B:A,s1=flip?A:B;
-  const p=find(L,all.filter(s0),r=>s1(r[r.length-1]),free);
-  if(!p)continue;
-  p.forEach(i=>free[i]=false);sol.push({word:c.span,cells:p,sp:1});
-  const ws=sh(c.words).sort((a,b)=>b.length-a.length+(Math.random()-.5)*3);
-  let good=true;
-  for(let k=0;k<ws.length&&good;k++){
-   const rest=ws.slice(k+1).map(w=>w.length),mn=rest.length?Math.min(...rest):0;
-   const q=find(ws[k].length,all,null,free);
-   if(!q){good=false;break}
-   q.forEach(i=>free[i]=false);sol.push({word:ws[k],cells:q,sp:0});
-   if(!ok2(free,mn||1)){good=false}
-  }
-  if(!good||free.some(x=>x))continue;
-  const letters=Array(N);sol.forEach(s=>s.cells.forEach((ci,k)=>letters[ci]=s.word[k]));
-  return{letters,sol,R,C,theme:c.theme}
- }
- return null
-}
+        function gen(c) {
+            const R = c.rows, C = c.cols, N = R * C, NB = [];
+            for (let i = 0; i < N; i++) { const r = i / C | 0, q = i % C, a = []; for (let dr = -1; dr <= 1; dr++)for (let dc = -1; dc <= 1; dc++) { if (!dr && !dc) continue; const rr = r + dr, cc = q + dc; if (rr >= 0 && rr < R && cc >= 0 && cc < C) a.push(rr * C + cc) } NB.push(a) }
+            const sh = a => { a = a.slice(); for (let i = a.length; i > 1;) { const j = Math.random() * i-- | 0;[a[i], a[j]] = [a[j], a[i]] } return a };
+            const dg = new Set();
+            const dk = (a, b) => { const r1 = a / C | 0, c1 = a % C, r2 = b / C | 0, c2 = b % C; if (r1 == r2 || c1 == c2) return null; const t = (r2 - r1) * (c2 - c1) > 0 ? 'd' : 'a', p = Math.min(r1, r2) + ',' + Math.min(c1, c2) + ','; return [p + t, p + (t == 'd' ? 'a' : 'd')] };
+            const find = (len, starts, ok, free) => {
+                let steps = 0; const used = new Set(), path = [], loc = new Set();
+                const go = (i, k) => {
+                    if (++steps > 2500) return false; path.push(i); used.add(i); if (k) loc.add(k[0]);
+                    if (path.length == len) { if (!ok || ok(path)) return true }
+                    else for (const n of sh(NB[i])) { if (!free[n] || used.has(n)) continue; const k2 = dk(i, n); if (k2 && (dg.has(k2[1]) || loc.has(k2[1]))) continue; if (go(n, k2)) return true }
+                    path.pop(); used.delete(i); if (k) loc.delete(k[0]); return false
+                };
+                for (const s of sh(starts)) { steps = 0; if (free[s] && go(s, null)) { const p = path.slice(); for (let j = 1; j < p.length; j++) { const k = dk(p[j - 1], p[j]); if (k) dg.add(k[0]) } return p } } return null
+            };
+            const ok2 = (free, minLen) => { const seen = new Set(); for (let i = 0; i < N; i++) { if (!free[i] || seen.has(i)) continue; let n = 0; const st = [i]; seen.add(i); while (st.length) { const x = st.pop(); n++; for (const y of NB[x]) if (free[y] && !seen.has(y)) { seen.add(y); st.push(y) } } if (n < minLen) return false } return true };
+            const L = c.span.length, dirs = []; if (L >= C) dirs.push('h'); if (L >= R) dirs.push('v');
+            if (!dirs.length) return null;
+            const all = [...Array(N).keys()];
+            for (let t = 0; t < 800; t++) {
+                dg.clear();
+                const free = Array(N).fill(true), sol = [], d = dirs[Math.random() * dirs.length | 0], flip = Math.random() < .5;
+                const A = i => d == 'h' ? i % C == 0 : i < C, B = i => d == 'h' ? i % C == C - 1 : i >= N - C;
+                const s0 = flip ? B : A, s1 = flip ? A : B;
+                const p = find(L, all.filter(s0), r => s1(r[r.length - 1]), free);
+                if (!p) continue;
+                p.forEach(i => free[i] = false); sol.push({ word: c.span, cells: p, sp: 1 });
+                const ws = sh(c.words).sort((a, b) => b.length - a.length + (Math.random() - .5) * 3);
+                let good = true;
+                for (let k = 0; k < ws.length && good; k++) {
+                    const rest = ws.slice(k + 1).map(w => w.length), mn = rest.length ? Math.min(...rest) : 0;
+                    const q = find(ws[k].length, all, null, free);
+                    if (!q) { good = false; break }
+                    q.forEach(i => free[i] = false); sol.push({ word: ws[k], cells: q, sp: 0 });
+                    if (!ok2(free, mn || 1)) { good = false }
+                }
+                if (!good || free.some(x => x)) continue;
+                const letters = Array(N); sol.forEach(s => s.cells.forEach((ci, k) => letters[ci] = s.word[k]));
+                return { letters, sol, R, C, theme: c.theme }
+            }
+            return null
+        }
 
-function draw(){
- const {R,C,letters}=P;
- $('#th').textContent=cfg.theme;
- const root=document.documentElement.style;root.setProperty('--found',cfg.c1);root.setProperty('--span',cfg.c2);
- const b=$('#board');b.style.aspectRatio=C+'/'+R;b.style.setProperty('--cols',C);$('#grid').style.setProperty('--cols',C);
- const kind={};found.forEach(f=>f.cells.forEach(i=>kind[i]=f.sp?'s':'f'));
- $('#grid').innerHTML=letters.map((l,i)=>`<div class="cell" data-i="${i}"><div class="dot ${kind[i]||''} ${sel.includes(i)?'sel':''} ${i===hintCell&&!kind[i]?'hint':''}">${l}</div></div>`).join('');
- const ln=(cells,col)=>cells.length<2?'':`<polyline points="${cells.map(i=>((i%C)+.5)+','+((i/C|0)+.5)).join(' ')}" fill="none" stroke="${col}" stroke-width=".16" stroke-linecap="round" stroke-linejoin="round"/>`;
- $('#svg').setAttribute('viewBox',`0 0 ${C} ${R}`);
- $('#svg').innerHTML=found.map(f=>ln(f.cells,f.sp?cfg.c2:cfg.c1)).join('')+ln(sel,getComputedStyle(document.body).getPropertyValue('--sel')||'#000');
- $('#prog').textContent=`${found.length} of ${P.sol.length} theme words found`;
-}
-function msg(t,shake){const m=$('#msg');m.textContent=t;if(shake){const g=$('#grid');g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake')}}
+        function draw() {
+            const { R, C, letters } = P;
+            $('#th').textContent = cfg.theme;
+            const root = document.documentElement.style; root.setProperty('--found', cfg.c1); root.setProperty('--span', cfg.c2);
+            const b = $('#board'); b.style.aspectRatio = C + '/' + R; b.style.setProperty('--cols', C); $('#grid').style.setProperty('--cols', C);
+            const kind = {}; found.forEach(f => f.cells.forEach(i => kind[i] = f.sp ? 's' : 'f'));
+            $('#grid').innerHTML = letters.map((l, i) => `<div class="cell" data-i="${i}"><div class="dot ${kind[i] || ''} ${sel.includes(i) ? 'sel' : ''} ${i === hintCell && !kind[i] ? 'hint' : ''}">${l}</div></div>`).join('');
+            const ln = (cells, col) => cells.length < 2 ? '' : `<polyline points="${cells.map(i => ((i % C) + .5) + ',' + ((i / C | 0) + .5)).join(' ')}" fill="none" stroke="${col}" stroke-width=".16" stroke-linecap="round" stroke-linejoin="round"/>`;
+            $('#svg').setAttribute('viewBox', `0 0 ${C} ${R}`);
+            $('#svg').innerHTML = found.map(f => ln(f.cells, f.sp ? cfg.c2 : cfg.c1)).join('') + ln(sel, getComputedStyle(document.body).getPropertyValue('--sel') || '#000');
+            $('#prog').textContent = `${found.length} of ${P.sol.length} theme words found`;
+        }
+        function msg(t, shake) { const m = $('#msg'); m.textContent = t; if (shake) { const g = $('#grid'); g.classList.remove('shake'); void g.offsetWidth; g.classList.add('shake') } }
 
-function start(){
- const r=gen(cfg);
- if(!r){msg('Couldn’t fit these words. Try a different grid size or shorter words.');return false}
- P=r;found=[];sel=[];tap=false;hintCell=-1;hints=0;done=false;msg('Lines can’t cross each other.');draw();return true
-}
-function dkey(a,b){const C=P.C,r1=a/C|0,c1=a%C,r2=b/C|0,c2=b%C;if(r1==r2||c1==c2)return null;const t=(r2-r1)*(c2-c1)>0?'d':'a',p=Math.min(r1,r2)+','+Math.min(c1,c2)+',';return[p+t,p+(t=='d'?'a':'d')]}
-function crosses(a,b){const k=dkey(a,b);if(!k)return false;const S=new Set(),add=c=>{for(let j=1;j<c.length;j++){const q=dkey(c[j-1],c[j]);if(q)S.add(q[0])}};found.forEach(f=>add(f.cells));add(sel);return S.has(k[1])}
-function adj(a,b){const C=P.C;return Math.abs((a/C|0)-(b/C|0))<=1&&Math.abs(a%C-b%C)<=1&&a!==b}
-function cellAt(e){
- const r=$('#board').getBoundingClientRect(),x=(e.clientX-r.left)/r.width*P.C,y=(e.clientY-r.top)/r.height*P.R;
- const c=Math.floor(x),q=Math.floor(y);if(c<0||q<0||c>=P.C||q>=P.R)return -1;
- return Math.hypot(x-c-.5,y-q-.5)<.42?q*P.C+c:-1}
-function submit(){
- if(sel.length<2){sel=[];tap=false;draw();return}
- const w=sel.map(i=>P.letters[i]).join(''),rw=[...w].reverse().join(''),key=[...sel].sort((a,b)=>a-b).join();
- const m=P.sol.find(s=>[...s.cells].sort((a,b)=>a-b).join()==key&&(s.word==w||s.word==rw));
- if(m&&!found.includes(m)){found.push(m);hintCell=-1;
-  if(found.length==P.sol.length){done=true;msg('Solved! Every letter is in place.')}
-  else msg(m.sp?'You found the spangram!':'Found “'+m.word.toLowerCase()+'”')}
- else if(m)msg('Already found');
- else if(P.sol.some(s=>s.word==w||s.word==rw))msg('Right word, different path. Try another route.',1);
- else msg('Not a theme word',1);
- sel=[];tap=false;draw()
-}
-const board=$('#board');
-board.addEventListener('pointerdown',e=>{
- if(!P||done)return;const i=cellAt(e);if(i<0)return;
- const used=found.some(f=>f.cells.includes(i));
- if(tap&&sel.length){
-  if(i===sel[sel.length-1]){submit();return}
-  if(!sel.includes(i)&&!used&&adj(sel[sel.length-1],i)&&!crosses(sel[sel.length-1],i)){sel.push(i);draw();return}
-  sel=[];tap=false}
- if(used){draw();return}
- sel=[i];drag=true;board.setPointerCapture(e.pointerId);draw()});
-board.addEventListener('pointermove',e=>{
- if(!drag)return;const i=cellAt(e);if(i<0)return;
- const last=sel[sel.length-1];if(i===last)return;
- if(sel.length>1&&i===sel[sel.length-2]){sel.pop();draw();return}
- if(!sel.includes(i)&&adj(last,i)&&!crosses(last,i)&&!found.some(f=>f.cells.includes(i))){sel.push(i);draw()}});
-const up=()=>{if(!drag)return;drag=false;if(sel.length>1)submit();else{tap=sel.length==1;draw()}};
-board.addEventListener('pointerup',up);board.addEventListener('pointercancel',up);
+        function start() {
+            const r = gen(cfg);
+            if (!r) { msg('Couldn’t fit these words. Try a different grid size or shorter words.'); return false }
+            P = r; found = []; sel = []; tap = false; hintCell = -1; hints = 0; done = false; msg('Lines can’t cross each other.'); draw(); return true
+        }
+        function dkey(a, b) { const C = P.C, r1 = a / C | 0, c1 = a % C, r2 = b / C | 0, c2 = b % C; if (r1 == r2 || c1 == c2) return null; const t = (r2 - r1) * (c2 - c1) > 0 ? 'd' : 'a', p = Math.min(r1, r2) + ',' + Math.min(c1, c2) + ','; return [p + t, p + (t == 'd' ? 'a' : 'd')] }
+        function crosses(a, b) { const k = dkey(a, b); if (!k) return false; const S = new Set(), add = c => { for (let j = 1; j < c.length; j++) { const q = dkey(c[j - 1], c[j]); if (q) S.add(q[0]) } }; found.forEach(f => add(f.cells)); add(sel); return S.has(k[1]) }
+        function adj(a, b) { const C = P.C; return Math.abs((a / C | 0) - (b / C | 0)) <= 1 && Math.abs(a % C - b % C) <= 1 && a !== b }
+        function cellAt(e) {
+            const r = $('#board').getBoundingClientRect(), x = (e.clientX - r.left) / r.width * P.C, y = (e.clientY - r.top) / r.height * P.R;
+            const c = Math.floor(x), q = Math.floor(y); if (c < 0 || q < 0 || c >= P.C || q >= P.R) return -1;
+            return Math.hypot(x - c - .5, y - q - .5) < .42 ? q * P.C + c : -1
+        }
+        function submit() {
+            if (sel.length < 2) { sel = []; tap = false; draw(); return }
+            const w = sel.map(i => P.letters[i]).join(''), rw = [...w].reverse().join(''), key = [...sel].sort((a, b) => a - b).join();
+            const m = P.sol.find(s => [...s.cells].sort((a, b) => a - b).join() == key && (s.word == w || s.word == rw));
+            if (m && !found.includes(m)) {
+                found.push(m); hintCell = -1;
+                if (found.length == P.sol.length) { done = true; msg('Solved! Every letter is in place.') }
+                else msg(m.sp ? 'You found the spangram!' : 'Found “' + m.word.toLowerCase() + '”')
+            }
+            else if (m) msg('Already found');
+            else if (P.sol.some(s => s.word == w || s.word == rw)) msg('Right word, different path. Try another route.', 1);
+            else msg('Not a theme word', 1);
+            sel = []; tap = false; draw()
+        }
+        const board = $('#board');
+        board.addEventListener('pointerdown', e => {
+            if (!P || done) return; const i = cellAt(e); if (i < 0) return;
+            const used = found.some(f => f.cells.includes(i));
+            if (tap && sel.length) {
+                if (i === sel[sel.length - 1]) { submit(); return }
+                if (!sel.includes(i) && !used && adj(sel[sel.length - 1], i) && !crosses(sel[sel.length - 1], i)) { sel.push(i); draw(); return }
+                sel = []; tap = false
+            }
+            if (used) { draw(); return }
+            sel = [i]; drag = true; board.setPointerCapture(e.pointerId); draw()
+        });
+        board.addEventListener('pointermove', e => {
+            if (!drag) return; const i = cellAt(e); if (i < 0) return;
+            const last = sel[sel.length - 1]; if (i === last) return;
+            if (sel.length > 1 && i === sel[sel.length - 2]) { sel.pop(); draw(); return }
+            if (!sel.includes(i) && adj(last, i) && !crosses(last, i) && !found.some(f => f.cells.includes(i))) { sel.push(i); draw() }
+        });
+        const up = () => { if (!drag) return; drag = false; if (sel.length > 1) submit(); else { tap = sel.length == 1; draw() } };
+        board.addEventListener('pointerup', up); board.addEventListener('pointercancel', up);
 
-$('#bHint').onclick=()=>{if(!P||done)return;const left=P.sol.filter(s=>!found.includes(s));
- const s=left[Math.random()*left.length|0];hintCell=s.cells[0];hints++;msg('Hint: a word starts at the ringed letter ('+hints+' used)');draw()};
-$('#bNew').onclick=start;
-$('#bEd').onclick=()=>{$('#ed').hidden=!$('#ed').hidden;if(!$('#ed').hidden)$('#ed').scrollIntoView({behavior:'smooth'})};
+        $('#bHint').onclick = () => {
+            if (!P || done) return; const left = P.sol.filter(s => !found.includes(s));
+            const s = left[Math.random() * left.length | 0]; hintCell = s.cells[0]; hints++; msg('Hint: a word starts at the ringed letter (' + hints + ' used)'); draw()
+        };
+        $('#bNew').onclick = start;
+        $('#bEd').onclick = () => { $('#ed').hidden = !$('#ed').hidden; if (!$('#ed').hidden) $('#ed').scrollIntoView({ behavior: 'smooth' }) };
 
-function fill(c){$('#fT').value=c.theme;$('#fS').value=c.span;$('#fW').value=c.words.join('\n');$('#fR').value=c.rows;$('#fC').value=c.cols;$('#c1').value=c.c1;$('#c2').value=c.c2;$('#fE').value=c.email||'';count()}
-function read(){return{theme:$('#fT').value.trim(),span:clean($('#fS').value),words:$('#fW').value.split(/[\n,]+/).map(clean).filter(Boolean),rows:+$('#fR').value,cols:+$('#fC').value,c1:$('#c1').value,c2:$('#c2').value,email:$('#fE').value.trim()}}
-function count(){const c=read(),t=c.span.length+c.words.reduce((a,w)=>a+w.length,0),n=c.rows*c.cols,el=$('#count');
- el.className=t==n?'ok':'bad';
- el.textContent=t==n?`${t} letters fill the ${c.cols}×${c.rows} grid exactly.`:t<n?`${t} of ${n} letters. Add ${n-t} more, or shrink the grid.`:`${t} letters for ${n} cells. Remove ${t-n}, or enlarge the grid.`}
-['fT','fS','fW','fR','fC'].forEach(id=>$('#'+id).addEventListener('input',count));
-$('#bReset').onclick=()=>fill(SAMPLE);
-$('#bBuild').onclick=()=>{
- const c=read();
- if(!c.theme||!c.span||!c.words.length){msg('Add a theme, a spangram, and at least one word.');return}
- if(c.rows<3||c.cols<3||c.rows>12||c.cols>10){msg('Grid size must be 3 to 12 rows and 3 to 10 columns.');return}
- if(c.span.length<Math.min(c.rows,c.cols)){msg('The spangram needs at least '+Math.min(c.rows,c.cols)+' letters to reach opposite edges.');return}
- const t=c.span.length+c.words.reduce((a,w)=>a+w.length,0);
- if(t!=c.rows*c.cols){msg('Letter count must equal rows × columns. '+count()||'');return}
- cfg=c;if(start()){try{localStorage.setItem('spangram-cfg',JSON.stringify(c))}catch(e){}$('#ed').hidden=true;window.scrollTo({top:0,behavior:'smooth'})}};
-$('#bSub').onclick=()=>{
- if(!P)return;const who=$('#who').value.trim();if(!who){msg('Enter your name first.');return}
- const cells=found.reduce((a,f)=>a+f.cells.length,0),N=P.R*P.C,words=found.map(f=>f.word);
- const text=`${who} found ${found.length} of ${P.sol.length} problems. ${cells} of ${N} fields correct.`;
- const R=$('#res');R.textContent='';const p=document.createElement('p');p.textContent=text;R.append(p);
- if(!cfg.email){p.textContent+=' No email address is set for this puzzle yet.';return}
- const href='mailto:'+cfg.email+'?subject='+encodeURIComponent('Grid result: '+who)+'&body='+encodeURIComponent(text+'\nProblems found: '+(words.join(', ')||'none'));
- const a=document.createElement('a');a.target='_top';a.href=href;a.textContent='Send my result by email';R.append(a);
- try{window.open(href,'_top')}catch(e){}
-};
-fill(cfg);if(!start())fill(cfg);
-</script>
+        function fill(c) { $('#fT').value = c.theme; $('#fS').value = c.span; $('#fW').value = c.words.join('\n'); $('#fR').value = c.rows; $('#fC').value = c.cols; $('#c1').value = c.c1; $('#c2').value = c.c2; $('#fE').value = c.email || ''; count() }
+        function read() { return { theme: $('#fT').value.trim(), span: clean($('#fS').value), words: $('#fW').value.split(/[\n,]+/).map(clean).filter(Boolean), rows: +$('#fR').value, cols: +$('#fC').value, c1: $('#c1').value, c2: $('#c2').value, email: $('#fE').value.trim() } }
+        function count() {
+            const c = read(), t = c.span.length + c.words.reduce((a, w) => a + w.length, 0), n = c.rows * c.cols, el = $('#count');
+            el.className = t == n ? 'ok' : 'bad';
+            el.textContent = t == n ? `${t} letters fill the ${c.cols}×${c.rows} grid exactly.` : t < n ? `${t} of ${n} letters. Add ${n - t} more, or shrink the grid.` : `${t} letters for ${n} cells. Remove ${t - n}, or enlarge the grid.`
+        }
+        ['fT', 'fS', 'fW', 'fR', 'fC'].forEach(id => $('#' + id).addEventListener('input', count));
+        $('#bReset').onclick = () => fill(SAMPLE);
+        $('#bBuild').onclick = () => {
+            const c = read();
+            if (!c.theme || !c.span || !c.words.length) { msg('Add a theme, a spangram, and at least one word.'); return }
+            if (c.rows < 3 || c.cols < 3 || c.rows > 12 || c.cols > 10) { msg('Grid size must be 3 to 12 rows and 3 to 10 columns.'); return }
+            if (c.span.length < Math.min(c.rows, c.cols)) { msg('The spangram needs at least ' + Math.min(c.rows, c.cols) + ' letters to reach opposite edges.'); return }
+            const t = c.span.length + c.words.reduce((a, w) => a + w.length, 0);
+            if (t != c.rows * c.cols) { msg('Letter count must equal rows × columns. ' + count() || ''); return }
+            cfg = c; if (start()) { try { localStorage.setItem('spangram-cfg', JSON.stringify(c)) } catch (e) { } $('#ed').hidden = true; window.scrollTo({ top: 0, behavior: 'smooth' }) }
+        };
+        $('#bSub').onclick = () => {
+            if (!P) return; const who = $('#who').value.trim(); if (!who) { msg('Enter your name first.'); return }
+            const cells = found.reduce((a, f) => a + f.cells.length, 0), N = P.R * P.C, words = found.map(f => f.word);
+            const text = `${who} found ${found.length} of ${P.sol.length} problems. ${cells} of ${N} fields correct.`;
+            const R = $('#res'); R.textContent = ''; const p = document.createElement('p'); p.textContent = text; R.append(p);
+            if (!cfg.email) { p.textContent += ' No email address is set for this puzzle yet.'; return }
+            const href = 'mailto:' + cfg.email + '?subject=' + encodeURIComponent('Grid result: ' + who) + '&body=' + encodeURIComponent(text + '\nProblems found: ' + (words.join(', ') || 'none'));
+            const a = document.createElement('a'); a.target = '_top'; a.href = href; a.textContent = 'Send my result by email'; R.append(a);
+            try { window.open(href, '_top') } catch (e) { }
+        };
+        fill(cfg); if (!start()) fill(cfg);
+    </script>
 </body>
+
 </html>
