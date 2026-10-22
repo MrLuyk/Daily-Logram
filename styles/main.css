@@ -249,6 +249,7 @@ button.pri {
     margin-top: 0;
 }
 
+input[type=password],
 input[type=text],
 input[type=number],
 textarea {
@@ -308,10 +309,17 @@ input[type=color] {
     display: none !important;
 }
 
-#sub label {
+#sub label,
+#gate label {
     display: block;
     font-weight: 600;
     margin-bottom: 4px;
+}
+
+#pwMsg {
+    color: #d0453a;
+    font-weight: 600;
+    margin-top: 8px;
 }
 
 #sub a {

@@ -14,6 +14,12 @@
         <header>
             <h1>Daily Logram</h1><button id="bEd">Customize</button>
         </header>
+        <div id="gate" class="theme" hidden>
+            <label for="pw">Passcode</label>
+            <input type="password" id="pw" autocomplete="off">
+            <div class="acts"><button class="pri" id="bPw">Unlock</button></div>
+            <div id="pwMsg"></div>
+        </div>
         <div class="theme"><small>Theme</small><b id="th"></b></div>
         <div class="bar"><span id="prog"></span><span><button id="bHint">Hint</button> <button
                     id="bNew">Reshuffle</button></span></div>
@@ -164,7 +170,32 @@
             const s = left[Math.random() * left.length | 0]; hintCell = s.cells[0]; hints++; msg('Hint: a word starts at the ringed letter (' + hints + ' used)'); draw()
         };
         $('#bNew').onclick = start;
-        $('#bEd').onclick = () => { $('#ed').hidden = !$('#ed').hidden; if (!$('#ed').hidden) $('#ed').scrollIntoView({ behavior: 'smooth' }) };
+        const PASSCODE = 'change-me';   // set your passcode here
+        let unlocked = false;
+
+        function toggleEd() {
+            $('#ed').hidden = !$('#ed').hidden;
+            if (!$('#ed').hidden) $('#ed').scrollIntoView({ behavior: 'smooth' });
+        }
+        function tryPw() {
+            if ($('#pw').value === PASSCODE) {
+                unlocked = true;
+                $('#gate').hidden = true;
+                $('#pwMsg').textContent = '';
+                $('#pw').value = '';
+                toggleEd();
+            } else {
+                $('#pwMsg').textContent = 'Wrong passcode.';
+                $('#pw').value = '';
+            }
+        }
+        $('#bEd').onclick = () => {
+            if (unlocked) { toggleEd(); return; }
+            $('#gate').hidden = !$('#gate').hidden;
+            if (!$('#gate').hidden) $('#pw').focus();
+        };
+        $('#bPw').onclick = tryPw;
+        $('#pw').addEventListener('keydown', e => { if (e.key === 'Enter') tryPw(); });
 
         function fill(c) { $('#fT').value = c.theme; $('#fS').value = c.span; $('#fW').value = c.words.join('\n'); $('#fR').value = c.rows; $('#fC').value = c.cols; $('#c1').value = c.c1; $('#c2').value = c.c2; $('#fE').value = c.email || ''; count() }
         function read() { return { theme: $('#fT').value.trim(), span: clean($('#fS').value), words: $('#fW').value.split(/[\n,]+/).map(clean).filter(Boolean), rows: +$('#fR').value, cols: +$('#fC').value, c1: $('#c1').value, c2: $('#c2').value, email: $('#fE').value.trim() } }
