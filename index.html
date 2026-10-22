@@ -113,8 +113,8 @@
 
         function start() {
             const r = gen(cfg);
-            if (!r) { msg('Couldn’t fit these words. Try a different grid size or shorter words.'); return false }
-            P = r; found = []; sel = []; tap = false; hintCell = -1; hints = 0; done = false; msg('Lines can’t cross each other.'); draw(); return true
+            if (!r) { msg('Couldn’t fit these numbers. Try a different grid size or shorter equations.'); return false }
+            P = r; found = []; sel = []; tap = false; hintCell = -1; hints = 0; done = false; msg('There are four equations in this puzzle.'); draw(); return true
         }
         function dkey(a, b) { const C = P.C, r1 = a / C | 0, c1 = a % C, r2 = b / C | 0, c2 = b % C; if (r1 == r2 || c1 == c2) return null; const t = (r2 - r1) * (c2 - c1) > 0 ? 'd' : 'a', p = Math.min(r1, r2) + ',' + Math.min(c1, c2) + ','; return [p + t, p + (t == 'd' ? 'a' : 'd')] }
         function crosses(a, b) { const k = dkey(a, b); if (!k) return false; const S = new Set(), add = c => { for (let j = 1; j < c.length; j++) { const q = dkey(c[j - 1], c[j]); if (q) S.add(q[0]) } }; found.forEach(f => add(f.cells)); add(sel); return S.has(k[1]) }
@@ -130,12 +130,12 @@
             const m = P.sol.find(s => [...s.cells].sort((a, b) => a - b).join() == key && (s.word == w || s.word == rw));
             if (m && !found.includes(m)) {
                 found.push(m); hintCell = -1;
-                if (found.length == P.sol.length) { done = true; msg('Solved! Every letter is in place.') }
-                else msg(m.sp ? 'You found the spangram!' : 'Found “' + m.word.toLowerCase() + '”')
+                if (found.length == P.sol.length) { done = true; msg('Solved! Every number is in place.') }
+                else msg(m.sp ? 'You found the Logram!' : 'Found “' + m.word.toLowerCase() + '”')
             }
             else if (m) msg('Already found');
-            else if (P.sol.some(s => s.word == w || s.word == rw)) msg('Right word, different path. Try another route.', 1);
-            else msg('Not a theme word', 1);
+            else if (P.sol.some(s => s.word == w || s.word == rw)) msg('Right numbers, different path. Try another route.', 1);
+            else msg('Not a theme equation', 1);
             sel = []; tap = false; draw()
         }
         const board = $('#board');
