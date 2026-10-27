@@ -53,7 +53,7 @@
     </main>
     <script>
         const $ = s => document.querySelector(s);
-        const SAMPLE = { theme: "Subtract Those 5's", span: '55-5=50', words: ['20-5=15', '11-5=6', '6-5=1'], rows: 5, cols: 5, c1: '#ff4a68', c2: '#f3c94b', email: 'cluyk@oaisd.org' };
+        const SAMPLE = { theme: "Time To Multiply", span: '8*4=32', words: ['12*12=144', '11*7=77', '12*9=108'], rows: 6, cols: 5, c1: '#ff4a68', c2: '#f3c94b', email: 'cluyk@oaisd.org' };
         const clean = s => s.toUpperCase().replace(/\*/g, '×').replace(/\//g, '÷').replace(/[^\p{L}\p{N}+\-=×÷]/gu, '');
         let cfg = SAMPLE;
         try { const s = localStorage.getItem('spangram-cfg'); if (s) cfg = JSON.parse(s) } catch (e) { }
